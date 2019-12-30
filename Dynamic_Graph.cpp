@@ -27,3 +27,7 @@ void Dynamic_Graph::Delete_Edge(Graph_Edge* edge)
     edge->get_from()->Set_out_Degree(SUBTRACT);
     edge->get_to()->Set_in_Degree(SUBTRACT);
 }
+
+
+Rooted_Tree* Dynamic_Graph::SCC() const{}
+Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const{}

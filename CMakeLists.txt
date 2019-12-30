@@ -3,4 +3,5 @@ project(mivne)
 
 set(CMAKE_CXX_STANDARD 98)
 
-add_executable(mivne main.cpp Graph_Node.h Graph_Node.cpp Rooted_Tree.h Dynamic_Graph.h Graph_Edge.cpp Graph_Edge.h Dynamic_Graph.cpp)
+add_executable(mivne main.cpp Graph_Node.cpp Rooted_Tree.h Dynamic_Graph.h
+        Graph_Edge.cpp Graph_Edge.h Dynamic_Graph.cpp)
