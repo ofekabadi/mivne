@@ -7,15 +7,25 @@ typedef enum {SUBTRACT=0, ADD} Node_operations;
 class Graph_Node
 {
 public:
-    Graph_Node (unsigned const newKey): key(newKey), out_Degree(0), in_Degree(0),
-        father(NULL), left_child(NULL), right_sibling(NULL), location(0){}
-    unsigned Get_out_Degree() const {return out_Degree;}
-    void Set_out_Degree(Node_operations operation);
-    unsigned Get_in_Degree() const {return in_Degree;}
-    void Set_in_Degree(Node_operations operation);
+    Graph_Node (unsigned newKey): key(newKey), out_Degree(0), in_Degree(0),
+    father(NULL), left_child(NULL), right_sibling(NULL), _next(NULL), _prev(NULL){}
+
     inline unsigned Get_key() const {return key;};
-    inline void Set_location(unsigned array_location) {location = array_location;}
-    inline unsigned Get_location() {return location;}
+
+    inline unsigned Get_out_Degree() const {return out_Degree;}
+    inline unsigned Get_in_Degree() const {return in_Degree;}
+    void Set_out_Degree(Node_operations operation);
+    void Set_in_Degree(Node_operations operation);
+
+
+    inline Graph_Node* Get_next() {return _next;}
+    inline Graph_Node* Get_prev() {return _prev;}
+    inline void Set_next(Graph_Node* next) {_next=next;}
+    inline void Set_prev(Graph_Node* prev) {_prev=prev;}
+
+
+
+
 
 private:
     unsigned out_Degree;
@@ -24,7 +34,8 @@ private:
     Graph_Node* father;
     Graph_Node* left_child;
     Graph_Node* right_sibling;
-    unsigned location;
+    Graph_Node* _next;
+    Graph_Node* _prev;
 };
 
 

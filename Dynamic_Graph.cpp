@@ -2,16 +2,25 @@
 
 Graph_Node* Dynamic_Graph::Insert_Node(unsigned node_key)
 {
-    nodes_array[num_of_nodes] = new Graph_Node(node_key);
-    nodes_array[num_of_nodes]->Set_location(num_of_nodes);
-    num_of_nodes++;
-    return nodes_array[num_of_nodes];
+    Graph_Node* newNode = new Graph_Node (node_key);
+    unsigned location = hash_function(node_key);
+    if (nodes_hash_array[location] != NULL)
+    {
+        newNode->Set_prev(nodes_hash_array[location]);
+        nodes_hash_array[location]->Set_next(newNode);
+        nodes_hash_array[location] = newNode;
+    }
+    else if  (nodes_hash_array[location] == NULL)
+    {
+        nodes_hash_array[location] = newNode;
+    }
 }
 
 void Dynamic_Graph::Delete_Node(Graph_Node* node)
 {
-    unsigned location = node->Get_location();
-    delete nodes_array[location];
+    node->Get_next()->Set_prev(node->Get_prev());
+    node->Get_prev()->Set_next(node->Get_next());
+    delete node;
 }
 
 Graph_Edge* Dynamic_Graph::Insert_Edge(Graph_Node* from, Graph_Node* to)
@@ -28,6 +37,11 @@ void Dynamic_Graph::Delete_Edge(Graph_Edge* edge)
     edge->get_to()->Set_in_Degree(SUBTRACT);
 }
 
+
+unsigned Dynamic_Graph::hash_function (unsigned node_key)
+{
+    return node_key%10;
+}
 
 Rooted_Tree* Dynamic_Graph::SCC() const{}
 Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const{}

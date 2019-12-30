@@ -8,6 +8,7 @@
 #define INITIAL_NODES_NUM 10
 #define INITIAL_EDGES_NUM 30
 #define NUM_OF_OPERATIONS 8
+#define HASH_ARRAY_SIZE 10
 
 class Dynamic_Graph
 {
@@ -21,11 +22,10 @@ public:
     void Delete_Edge(Graph_Edge* edge);
     Rooted_Tree* SCC() const;
     Rooted_Tree* BFS(Graph_Node* source) const;
+    unsigned hash_function (unsigned node_key);
 
 private:
-    Graph_Node* nodes_array[TEST_SIZE+INITIAL_NODES_NUM];
-    unsigned num_of_nodes;
-    Graph_Edge* edges_array[TEST_SIZE + INITIAL_EDGES_NUM];
+    Graph_Node* nodes_hash_array[HASH_ARRAY_SIZE];
 };
 
 #endif
