@@ -14,7 +14,7 @@ class Dynamic_Graph
 public:
     Dynamic_Graph(): nodes_array(), edges_array(), num_of_nodes(0){}     //should be
     // initialized to NULL
-    ~Dynamic_Graph();
+    ~Dynamic_Graph(){}
     Graph_Node* Insert_Node(unsigned node_key);
     void Delete_Node(Graph_Node* node);
     Graph_Edge* Insert_Edge(Graph_Node* from, Graph_Node* to);
