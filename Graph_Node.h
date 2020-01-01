@@ -7,8 +7,8 @@ typedef enum {SUBTRACT=0, ADD} Node_operations;
 class Graph_Node
 {
 public:
-    Graph_Node (unsigned newKey): _key(newKey), _out_Degree(0), _in_Degree(0),
-    _father(NULL), _left_child(NULL), _right_sibling(NULL), _next(NULL), _prev(NULL){}
+    Graph_Node (unsigned newKey): _key(newKey), _out_Degree(0), _in_Degree(0),  _next
+    (NULL), _prev(NULL){}
 
     inline unsigned Get_key() const {return _key;};
 
@@ -31,11 +31,10 @@ private:
     unsigned _out_Degree;
     unsigned _in_Degree;
     unsigned _key;
-    Graph_Node* _father;
-    Graph_Node* _left_child;
-    Graph_Node* _right_sibling;
     Graph_Node* _next;
     Graph_Node* _prev;
+
+
 };
 
 
