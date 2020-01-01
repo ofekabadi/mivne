@@ -4,6 +4,12 @@
 #include <cstddef>
 #include <ostream>
 #include "Tree_Node.h"
+#include "Queue.h"
+
+#define DELIMITER ","
+
+typedef Queue<Tree_Node*> Tree_Node_Queue;
+
 
 class Rooted_Tree
 {
