@@ -13,7 +13,7 @@
 class Dynamic_Graph
 {
 public:
-    Dynamic_Graph(): nodes_array(), edges_array(), num_of_nodes(0){}     //should be
+    Dynamic_Graph(): nodes_hash_array(), edges_array(), num_of_nodes(0){}     //should be
     // initialized to NULL
     ~Dynamic_Graph(){}
     Graph_Node* Insert_Node(unsigned node_key);
