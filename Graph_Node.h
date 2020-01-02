@@ -2,13 +2,18 @@
 #define GRAPH_NODE_H
 
 #include <cstddef>
+#include "My_List.h"
+
+class Graph_Edge; //forward declaration
+
 typedef enum {SUBTRACT=0, ADD} Node_operations;
+typedef My_List<Graph_Edge*> Adj_List;
 
 class Graph_Node
 {
 public:
-    Graph_Node (unsigned newKey): _key(newKey), _out_Degree(0), _in_Degree(0),  _next
-    (NULL), _prev(NULL){}
+    Graph_Node (unsigned newKey): _key(newKey), _out_Degree(0), _in_Degree(0),
+    _next(NULL), _prev(NULL), _adj(NULL){}
 
     inline unsigned Get_key() const {return _key;};
 
@@ -26,6 +31,7 @@ public:
 
 
 
+    Adj_List _adj; //temporarily public- needs friend or a getter
 
 private:
     unsigned _out_Degree;

@@ -4,10 +4,10 @@
 #include <cstddef>
 
 template <class T>
-class Queue
+class My_Queue
 {
 public:
-    Queue (T front): _front(front), _end(NULL){}
+    My_Queue (T front = NULL): _front(front), _end(front){}
     void Push(T x);
     void Pop();
     T Get_front();
@@ -20,7 +20,7 @@ private:
 
 
 template <class T>
-void Queue<T>::Push(T x)
+void My_Queue<T>::Push(T x)
 {
     if (x == NULL)
     {
@@ -40,13 +40,13 @@ void Queue<T>::Push(T x)
 }
 
 template <class T>
-void Queue<T>::Pop()
+void My_Queue<T>::Pop()
 {
     _front = _front->_next;
 }
 
 template <class T>
-T Queue<T>::Get_front()
+T My_Queue<T>::Get_front()
 {
     return _front;
 }

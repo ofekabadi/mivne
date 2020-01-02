@@ -1,8 +1,11 @@
 #ifndef MIVNE_DYNAMIC_GRAPH_H
 #define MIVNE_DYNAMIC_GRAPH_H
 #include "Graph_Node.h"
-#include "Rooted_Tree.h"
 #include "Graph_Edge.h"
+#include "Rooted_Tree.h"
+
+typedef My_List<Graph_Edge*> Edge_List;
+typedef My_List<Graph_Node*> Node_List;
 
 class Dynamic_Graph
 {

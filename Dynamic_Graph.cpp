@@ -62,7 +62,9 @@ Graph_Edge* Dynamic_Graph::Insert_Edge(Graph_Node* from, Graph_Node* to)
         first_edge->set_next(new_Graph_Edge);
         first_edge = new_Graph_Edge;
     }
+
     from->Set_out_Degree(ADD);
+    from->_adj.Adj_insert(new_Graph_Edge);
     to->Set_in_Degree(ADD);
 }
 
@@ -72,6 +74,9 @@ void Dynamic_Graph::Delete_Edge(Graph_Edge* edge)
     edge->get_prev()->set_next(edge->get_next());
 
     edge->get_from()->Set_out_Degree(SUBTRACT);
+
+    edge->get_from()->_adj.Adj_unlist(edge);
+
     edge->get_to()->Set_in_Degree(SUBTRACT);
     delete edge;
 }
