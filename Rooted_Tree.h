@@ -18,7 +18,7 @@ public:
     ~Rooted_Tree(){}
     void Print_By_Layer(std::ostream& stream) const;
     void Preorder_Print(std::ostream& stream) const;
-
+    void Preorder(Tree_Node* _child,std::ostream& stream)const;
 
 
 private:

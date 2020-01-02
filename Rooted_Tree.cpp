@@ -36,7 +36,25 @@ void Rooted_Tree::Print_By_Layer(std::ostream& stream) const
 
 
 
+
 void Rooted_Tree::Preorder_Print(std::ostream& stream) const
 {
+    if (_source == NULL)
+    {
+        return;
+    }
+    stream << _source->_key;
+    Preorder(_source->_left_child,stream);
+}
+
+void Rooted_Tree:: Preorder(Tree_Node* _child,std::ostream& stream)const
+{
+    if (_child == NULL)
+    {
+        return;
+    }
+    stream<<DELIMITER<<_child->_key;
+    Preorder(_child->_left_child,stream);
+    Preorder(_child->_left_child->_right_sibling,stream);
 
 }
