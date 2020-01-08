@@ -12,12 +12,11 @@ public:
     inline unsigned get_tree_key(){return _key;}
 
     friend class Rooted_Tree;
-    template <typename T>
-    friend class My_Queue;
+    template <typename T> friend class My_Queue;
 
 
 private:
-    unsigned _key;
+    unsigned const _key;
     Tree_Node* _father;
     Tree_Node* _left_child;
     Tree_Node* _right_sibling;

@@ -12,13 +12,12 @@ public:
     void Unlist(T x);
     void Adj_insert(T x);
     void Adj_unlist(T x);
+    T Get_head();
 
 private:
     T _head;
     T _tail;
 };
-
-#endif
 
 
 template <class T>
@@ -50,8 +49,12 @@ void My_List<T>::Unlist(T x)
         return;
     }
 
-    x->Get_next()->Set_prev(x->Get_prev());
-    x->Get_prev()->Set_next(x->Get_next());
+    x->_next->_prev = x->_prev;
+    x->_prev->_next = x->_next;
+
+    //x->Get_next()->Set_prev(x->Get_prev());
+    //x->Get_prev()->Set_next(x->Get_next());
+
 }  //does not delete!!!
 
 
@@ -88,3 +91,13 @@ void My_List<T>::Adj_unlist(T x)   //does not delete!!!
     x->_prev_adj->_next_adj = x->_next_adj;
     delete x;
 }
+
+
+template <class T>
+T  My_List<T>::Get_head()
+{
+    return _head;
+}
+
+
+#endif

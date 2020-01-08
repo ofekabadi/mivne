@@ -10,7 +10,7 @@ typedef My_List<Graph_Node*> Node_List;
 class Dynamic_Graph
 {
 public:
-    Dynamic_Graph(): num_of_edges(0),first_edge(NULL),first_node(NULL){}
+    Dynamic_Graph(): num_of_edges(0), graph_nodes_list(NULL), graph_edges_list(NULL){}
     ~Dynamic_Graph();
     Graph_Node* Insert_Node(unsigned node_key);
     void Delete_Node(Graph_Node* node);
@@ -21,10 +21,11 @@ public:
 
 
 private:
-    Graph_Edge* first_edge;
-    Graph_Node* first_node;
+    Node_List graph_nodes_list;
+    Edge_List graph_edges_list;
+    //Graph_Edge* first_edge;
+    //Graph_Node* first_node;
     unsigned num_of_edges;
-
 };
 
 #endif

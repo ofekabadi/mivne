@@ -22,16 +22,16 @@ public:
     void Set_out_Degree(Node_operations operation);
     void Set_in_Degree(Node_operations operation);
 
+    inline void add_adj(Graph_Edge* adj_edge) {_adj.Adj_insert(adj_edge);}
+    inline void remove_adj(Graph_Edge* adj_edge) {_adj.Adj_unlist(adj_edge);}
 
     inline Graph_Node* Get_next() {return _next;}
     inline Graph_Node* Get_prev() {return _prev;}
     inline void Set_next(Graph_Node* next) {_next=next;}
     inline void Set_prev(Graph_Node* prev) {_prev=prev;}
 
+    template <typename T> friend class My_List;
 
-
-
-    Adj_List _adj; //temporarily public- needs friend or a getter
 
 private:
     unsigned _out_Degree;
@@ -39,6 +39,7 @@ private:
     unsigned _key;
     Graph_Node* _next;
     Graph_Node* _prev;
+    Adj_List _adj;
 
 
 };

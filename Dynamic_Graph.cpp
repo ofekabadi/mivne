@@ -2,7 +2,7 @@
 
 Dynamic_Graph :: ~Dynamic_Graph()
 {
-    Graph_Edge* next_edge = NULL;
+    /*Graph_Edge* next_edge = NULL;
     Graph_Edge* current_edge = first_edge;
     while(current_edge != NULL)
     {
@@ -18,8 +18,21 @@ Dynamic_Graph :: ~Dynamic_Graph()
         next_node = current_node->Get_next();
         delete current_node;
         current_node = next_node;
+    }*/
+
+    Graph_Edge* front_edge = graph_edges_list.Get_head();
+    while (front_edge != NULL)
+    {
+        Delete_Edge(front_edge);
+        front_edge = graph_edges_list.Get_head();
     }
 
+    Graph_Node* front_node = graph_nodes_list.Get_head();
+    while (front_node != NULL)
+    {
+        Delete_Node(front_node);
+        front_node = graph_nodes_list.Get_head();
+    }
 
 }
 
@@ -27,24 +40,16 @@ Dynamic_Graph :: ~Dynamic_Graph()
 
 Graph_Node* Dynamic_Graph::Insert_Node(unsigned node_key)
 {
+
     Graph_Node* new_Node = new Graph_Node (node_key);
-    if(first_node == NULL)
-    {
-        first_node = new_Node;
-    }
-    else if(first_node != NULL)
-    {
-        first_node->Set_next(new_Node);
-        first_node = new_Node;
-    }
+    graph_nodes_list.Insert(new_Node);
 }
 
 void Dynamic_Graph::Delete_Node(Graph_Node* node)
 {
     if(node->Get_in_Degree() == 0  && node->Get_out_Degree() == 0)
     {
-        node->Get_next()->Set_prev(node->Get_prev());
-        node->Get_prev()->Set_next(node->Get_next());
+        graph_nodes_list.Unlist(node);
         delete node;
     }
 
@@ -53,30 +58,18 @@ void Dynamic_Graph::Delete_Node(Graph_Node* node)
 Graph_Edge* Dynamic_Graph::Insert_Edge(Graph_Node* from, Graph_Node* to)
 {
     Graph_Edge *new_Graph_Edge = new Graph_Edge(from,to);
-    if(first_edge == NULL)
-    {
-        first_edge = new_Graph_Edge;
-    }
-    else if(first_edge != NULL)
-    {
-        first_edge->set_next(new_Graph_Edge);
-        first_edge = new_Graph_Edge;
-    }
+    graph_edges_list.Insert(new_Graph_Edge);
 
     from->Set_out_Degree(ADD);
-    from->_adj.Adj_insert(new_Graph_Edge);
+    from->add_adj(new_Graph_Edge);
     to->Set_in_Degree(ADD);
 }
 
 void Dynamic_Graph::Delete_Edge(Graph_Edge* edge)
 {
-    edge->get_next()->set_prev(edge->get_prev());
-    edge->get_prev()->set_next(edge->get_next());
-
+    graph_edges_list.Unlist(edge);
+    edge->get_from()->remove_adj(edge);
     edge->get_from()->Set_out_Degree(SUBTRACT);
-
-    edge->get_from()->_adj.Adj_unlist(edge);
-
     edge->get_to()->Set_in_Degree(SUBTRACT);
     delete edge;
 }
