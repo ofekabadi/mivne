@@ -13,7 +13,7 @@ class Graph_Node
 {
 public:
     Graph_Node (unsigned newKey): _key(newKey), _out_Degree(0), _in_Degree(0),
-    _next(NULL), _prev(NULL), _adj(NULL){}
+    _next(NULL), _prev(NULL), _adj(NULL), _in_tree(false){}
 
     inline unsigned Get_key() const {return _key;};
 
@@ -22,8 +22,12 @@ public:
     void Set_out_Degree(Node_operations operation);
     void Set_in_Degree(Node_operations operation);
 
+    inline Graph_Edge* get_first_adj() {_adj.Get_head();}
     inline void add_adj(Graph_Edge* adj_edge) {_adj.Adj_insert(adj_edge);}
     inline void remove_adj(Graph_Edge* adj_edge) {_adj.Adj_unlist(adj_edge);}
+
+    void setInTree(bool inTree) {_in_tree = inTree;}
+
 
     inline Graph_Node* Get_next() {return _next;}
     inline Graph_Node* Get_prev() {return _prev;}
@@ -34,13 +38,13 @@ public:
 
 
 private:
+    unsigned const _key;
     unsigned _out_Degree;
     unsigned _in_Degree;
-    unsigned _key;
     Graph_Node* _next;
     Graph_Node* _prev;
     Adj_List _adj;
-
+    bool _in_tree;
 
 };
 

@@ -6,7 +6,8 @@
 
 class Tree_Node {
 public:
-    Tree_Node(unsigned key): _key(key), _father(NULL), _left_child(NULL),
+    Tree_Node(unsigned key, Tree_Node* father): _key(key), _father(father), _left_child
+    (NULL),
     _right_sibling(NULL), _next(NULL){}
 
     inline unsigned get_tree_key(){return _key;}

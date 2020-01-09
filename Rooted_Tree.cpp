@@ -1,5 +1,10 @@
 #include "Rooted_Tree.h"
 
+Rooted_Tree::~Rooted_Tree()
+{
+    delete _source;
+}
+
 
 void Rooted_Tree::Print_By_Layer(std::ostream& stream) const
 {
@@ -58,3 +63,5 @@ void Rooted_Tree:: Preorder(Tree_Node* _child,std::ostream& stream)const
     Preorder(_child->_left_child->_right_sibling,stream);
 
 }
+
+

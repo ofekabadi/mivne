@@ -80,4 +80,29 @@ Rooted_Tree* Dynamic_Graph::SCC() const
 {
 
 }
-Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const{}
+Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
+{
+    Rooted_Tree* tree = new Rooted_Tree;
+    Tree_Node* source_node = new Tree_Node(source->Get_key(), NULL);
+    tree->setSource(source_node);
+    source->setInTree(true);
+    tree->addToNodesList(source_node);
+
+    Graph_Node_Queue Q(source);
+    while (Q.Get_front() != NULL)
+    {
+        Graph_Node* current_node = Q.Pop();
+        Graph_Edge* adj = current_node->get_first_adj();
+        while (adj != NULL)
+        {
+            adj->get_from()->setInTree(true);
+            new Tree_Node(adj->get_from()->Get_key(), current_node);
+
+            Q.Push(adj->get_from());
+            adj = adj->get_next();
+
+        }
+
+    }
+
+}

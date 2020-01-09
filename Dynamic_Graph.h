@@ -3,9 +3,11 @@
 #include "Graph_Node.h"
 #include "Graph_Edge.h"
 #include "Rooted_Tree.h"
+#include "Tree_Node.h"
 
 typedef My_List<Graph_Edge*> Edge_List;
 typedef My_List<Graph_Node*> Node_List;
+typedef My_Queue<Graph_Node*> Graph_Node_Queue;
 
 class Dynamic_Graph
 {

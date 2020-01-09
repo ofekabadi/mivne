@@ -9,7 +9,7 @@ class My_Queue
 public:
     My_Queue (T front = NULL): _front(front), _end(front){}
     void Push(T x);
-    void Pop();
+    T Pop();
     T Get_front();
 
 private:
@@ -40,9 +40,11 @@ void My_Queue<T>::Push(T x)
 }
 
 template <class T>
-void My_Queue<T>::Pop()
+T My_Queue<T>::Pop()
 {
+    T poped = _front;
     _front = _front->_next;
+    return poped;
 }
 
 template <class T>
