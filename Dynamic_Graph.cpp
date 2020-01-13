@@ -2,24 +2,6 @@
 
 Dynamic_Graph :: ~Dynamic_Graph()
 {
-    /*Graph_Edge* next_edge = NULL;
-    Graph_Edge* current_edge = first_edge;
-    while(current_edge != NULL)
-    {
-        next_edge = current_edge->get_next();
-        delete current_edge;
-        current_edge = next_edge;
-    }
-
-    Graph_Node* next_node = NULL;
-    Graph_Node* current_node = first_node;
-    while(current_node != NULL)
-    {
-        next_node = current_node->Get_next();
-        delete current_node;
-        current_node = next_node;
-    }*/
-
     Graph_Edge* front_edge = graph_edges_list.Get_head();
     while (front_edge != NULL)
     {
@@ -38,9 +20,9 @@ Dynamic_Graph :: ~Dynamic_Graph()
 
 Graph_Node* Dynamic_Graph::Insert_Node(unsigned node_key)
 {
-
     Graph_Node* new_Node = new Graph_Node (node_key);
     graph_nodes_list.Insert(new_Node);
+    return new_Node;
 }
 
 void Dynamic_Graph::Delete_Node(Graph_Node* node)
@@ -73,10 +55,46 @@ void Dynamic_Graph::Delete_Edge(Graph_Edge* edge)
 }
 
 
-Rooted_Tree* Dynamic_Graph::SCC() const
+Rooted_Tree* Dynamic_Graph::SCC()
 {
 
 }
+
+
+Rooted_Tree*  Dynamic_Graph::DFS()
+{
+    visitedInitialiser();
+    Rooted_Tree* tree = new Rooted_Tree;
+    Tree_Node* root_node = new Tree_Node(graph_nodes_list.Get_head()->Get_key());
+    tree->addToNodesList(root_node);
+    tree->setSource(root_node);
+
+    DFS_Visit(root_node, graph_nodes_list.Get_head());
+
+}
+
+void Dynamic_Graph::visitedInitialiser()
+{
+    Graph_Node* front_node = graph_nodes_list.Get_head();
+    while (front_node != NULL)
+    {
+        front_node->setDfsVisited(false);
+        front_node = front_node->Get_next();
+    }
+}
+
+Rooted_Tree*  Dynamic_Graph::DFS_Visit(Tree_Node* treeFatherNode, Graph_Node*
+graphFatherNode)
+{
+    Graph_Edge* adj = graphFatherNode->get_first_adj();
+    while (adj != NULL)
+    {
+        Tree_Node* treeNode = new Tree_Node(adj->get_from()->Get_key());
+        treeNode->setFather(treeFatherNode);
+        DFS_Visit(treeNode, adj->get_from());
+    }
+}
+
 
 
 Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
@@ -124,3 +142,4 @@ Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
     }
     return tree;
 }
+

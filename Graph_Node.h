@@ -2,6 +2,7 @@
 #define GRAPH_NODE_H
 
 #include <cstddef>
+#include <iostream>
 #include "My_List.h"
 #include "Tree_Node.h"
 
@@ -14,12 +15,12 @@ class Graph_Node {
 public:
     Graph_Node(unsigned newKey) : _key(newKey), _out_Degree(0), _in_Degree(0),
                                   _next(NULL), _prev(NULL), _adj(NULL),
-                                  _related_Tree_Node(NULL) {}
+                                  _related_Tree_Node(NULL), _DFS_visited(false) {}
 
-    inline unsigned Get_key() const { return _key; };
+    inline unsigned Get_key() const {return _key;}
 
-    inline unsigned Get_out_Degree() const { return _out_Degree; }
-    inline unsigned Get_in_Degree() const { return _in_Degree; }
+    inline unsigned Get_out_Degree() const {return _out_Degree;}
+    inline unsigned Get_in_Degree() const {return _in_Degree;}
     void Set_out_Degree(Node_operations operation);
     void Set_in_Degree(Node_operations operation);
 
@@ -41,18 +42,24 @@ public:
 
     inline void Set_prev(Graph_Node *prev) { _prev = prev; }
 
+    void setDfsVisited(bool dfsVisited) {_DFS_visited = dfsVisited;}
+
     template<typename T> friend
     class My_List;
 
 
-    Graph_Node *_next;
 private:
     unsigned const _key;
     unsigned _out_Degree;
     unsigned _in_Degree;
+
+    Graph_Node *_next;
     Graph_Node *_prev;
+
     Adj_List _adj;
+
     Tree_Node *_related_Tree_Node;
+    bool _DFS_visited;
 };
 
 

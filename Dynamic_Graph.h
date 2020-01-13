@@ -18,9 +18,14 @@ public:
     void Delete_Node(Graph_Node* node);
     Graph_Edge* Insert_Edge(Graph_Node* from, Graph_Node* to);
     void Delete_Edge(Graph_Edge* edge);
-    Rooted_Tree* SCC() const;
-    Rooted_Tree* BFS(Graph_Node* source) const;
 
+    Rooted_Tree* SCC();
+    Rooted_Tree* DFS();
+    void visitedInitialiser();
+    Rooted_Tree* DFS_Visit(Tree_Node* fatherNode, Graph_Node* graphFatherNode);
+
+
+    Rooted_Tree* BFS(Graph_Node* source) const;
 
 private:
     Node_List graph_nodes_list;
