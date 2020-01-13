@@ -52,8 +52,6 @@ void My_List<T>::Unlist(T x)
     x->_next->_prev = x->_prev;
     x->_prev->_next = x->_next;
 
-    //x->Get_next()->Set_prev(x->Get_prev());
-    //x->Get_prev()->Set_next(x->Get_next());
 
 }  //does not delete!!!
 

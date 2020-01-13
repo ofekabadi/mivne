@@ -32,5 +32,4 @@ private:
     Tree_Nodes_List _nodes_List;
 
 };
-
 #endif

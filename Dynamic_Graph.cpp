@@ -36,8 +36,6 @@ Dynamic_Graph :: ~Dynamic_Graph()
 
 }
 
-
-
 Graph_Node* Dynamic_Graph::Insert_Node(unsigned node_key)
 {
 
@@ -75,34 +73,54 @@ void Dynamic_Graph::Delete_Edge(Graph_Edge* edge)
 }
 
 
-
 Rooted_Tree* Dynamic_Graph::SCC() const
 {
 
 }
+
+
 Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
 {
     Rooted_Tree* tree = new Rooted_Tree;
-    Tree_Node* source_node = new Tree_Node(source->Get_key(), NULL);
-    tree->setSource(source_node);
-    source->setInTree(true);
+    Tree_Node* source_node = new Tree_Node(source->Get_key());
+    source->setRelatedTreeNode(source_node);
     tree->addToNodesList(source_node);
 
     Graph_Node_Queue Q(source);
     while (Q.Get_front() != NULL)
     {
-        Graph_Node* current_node = Q.Pop();
+        Graph_Node* current_node = Q.Pop();   //this is a GRAPH node
+        Tree_Node* current_tree_node = current_node->getRelatedTreeNode();
+        if (current_node == source)
+        {
+            source_node->setFather(NULL);
+            tree->setSource(source_node);
+        }
+
         Graph_Edge* adj = current_node->get_first_adj();
         while (adj != NULL)
         {
-            adj->get_from()->setInTree(true);
-            new Tree_Node(adj->get_from()->Get_key(), current_node);
-
+            if(adj->get_from()->getRelatedTreeNode() != NULL)
+            {
+                continue;               //the node has already been discovered
+            }
+            Tree_Node* child_node = new Tree_Node(adj->get_from()->Get_key());
+            adj->get_from()->setRelatedTreeNode(child_node);
+            tree->addToNodesList(child_node);
+            child_node->setFather(current_tree_node);
+            if (current_node == current_node->get_first_adj()->get_from())
+            {
+                current_tree_node->setLeftChild(child_node);
+            }
+            if(adj->get_prev_adj() != NULL)
+            {
+                adj->get_prev_adj()->get_from()->getRelatedTreeNode()->setRightSibling
+                        (child_node);
+            }
             Q.Push(adj->get_from());
-            adj = adj->get_next();
-
+            adj = adj->get_next_adj();
         }
-
+        Q.Pop();
     }
-
+    return tree;
 }

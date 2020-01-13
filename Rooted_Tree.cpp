@@ -2,6 +2,12 @@
 
 Rooted_Tree::~Rooted_Tree()
 {
+    Tree_Node* front_node = _nodes_List.Get_head();
+    while (front_node != NULL)
+    {
+        _nodes_List.Unlist(front_node);
+        front_node = _nodes_List.Get_head();
+    }
     delete _source;
 }
 
@@ -63,5 +69,3 @@ void Rooted_Tree:: Preorder(Tree_Node* _child,std::ostream& stream)const
     Preorder(_child->_left_child->_right_sibling,stream);
 
 }
-
-

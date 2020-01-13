@@ -15,8 +15,10 @@ public:
 
     inline void set_next (Graph_Edge * next){_next = next;}
     inline void set_prev (Graph_Edge * prev){_prev = prev;}
-    inline Graph_Edge* get_next (){ return _next;}
-    inline Graph_Edge* get_prev (){ return _prev;}
+    inline Graph_Edge* get_next() const {return _next;}
+    inline Graph_Edge* get_prev (){return _prev;}
+    inline Graph_Edge* get_prev_adj() const {return _prev_adj;}
+    inline Graph_Edge* get_next_adj() const {return _next_adj;}
 
     template <typename T> friend class My_List;
 

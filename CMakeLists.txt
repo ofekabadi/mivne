@@ -4,5 +4,5 @@ project(mivne)
 set(CMAKE_CXX_STANDARD 98)
 
 add_executable(mivne main.cpp Graph_Node.cpp Rooted_Tree.h Dynamic_Graph.h
-        Graph_Edge.cpp Graph_Edge.h Dynamic_Graph.cpp Rooted_Tree.cpp Tree_Node.cpp
+        Graph_Edge.cpp Graph_Edge.h Dynamic_Graph.cpp Rooted_Tree.cpp
         Tree_Node.h My_Queue.h My_List.h)
