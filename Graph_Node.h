@@ -10,11 +10,13 @@ class Graph_Edge; //forward declaration
 
 typedef enum {SUBTRACT=0, ADD} Node_operations;
 typedef My_List<Graph_Edge*> Adj_List;
+typedef enum {FROM=0,TO } Edge_Sides;
+
 
 class Graph_Node {
 public:
     Graph_Node(unsigned newKey) : _key(newKey), _out_Degree(0), _in_Degree(0),
-                                  _next(NULL), _prev(NULL), _adj(NULL),
+                                  _next(NULL), _prev(NULL), _adj_from(NULL),_adj_to(NULL),
                                   _related_Tree_Node(NULL), _DFS_visited(false) {}
 
     inline unsigned Get_key() const {return _key;}
@@ -24,9 +26,9 @@ public:
     void Set_out_Degree(Node_operations operation);
     void Set_in_Degree(Node_operations operation);
 
-    inline Graph_Edge *get_first_adj() { _adj.Get_tail(); }
-    inline void add_adj(Graph_Edge *adj_edge) { _adj.Adj_insert(adj_edge); }
-    inline void remove_adj(Graph_Edge *adj_edge) { _adj.Adj_unlist(adj_edge); }
+    inline Graph_Edge *get_first_adj() { _adj_from.Get_tail(); }
+     void add_adj(Graph_Edge *adj_edge,Edge_Sides side);
+     void remove_adj(Graph_Edge *adj_edge,Edge_Sides side);
 
     //void setInTree(bool inTree) {_in_tree = inTree;}
 
@@ -57,7 +59,8 @@ private:
 
     unsigned _in_Degree;
 
-    Adj_List _adj;
+    Adj_List _adj_from;
+    Adj_List _adj_to;
 
     Tree_Node *_related_Tree_Node;
     bool _DFS_visited;

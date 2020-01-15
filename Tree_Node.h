@@ -2,9 +2,11 @@
 #define TREE_NODE_H
 
 #include <cstddef>
+//#include "Graph_Node.h"
 
 
-class Tree_Node {
+class Tree_Node
+        {
 public:
     Tree_Node(unsigned key): _key(key), _father(NULL), _left_child(NULL),
     _right_sibling(NULL), _next(NULL), _prev(NULL){}

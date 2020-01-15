@@ -2,18 +2,24 @@
 
 Dynamic_Graph :: ~Dynamic_Graph()
 {
+
     Graph_Edge* front_edge = graph_edges_list.Get_head();
+
     while (front_edge != NULL)
     {
         Delete_Edge(front_edge);
         front_edge = graph_edges_list.Get_head();
+
     }
 
     Graph_Node* front_node = graph_nodes_list.Get_head();
+    std::cout<<front_node->Get_key()<<std::endl;
     while (front_node != NULL)
     {
         Delete_Node(front_node);
-        front_node = graph_nodes_list.Get_head();
+        front_node = graph_nodes_list.Get_head();std::cout<<graph_nodes_list.Get_head()
+        ->Get_key()<<std::endl;
+
     }
 
 }
@@ -29,8 +35,8 @@ void Dynamic_Graph::Delete_Node(Graph_Node* node)
 {
     if(node->Get_in_Degree() == 0  && node->Get_out_Degree() == 0)
     {
-        graph_nodes_list.Unlist(node);
-        delete node;
+        graph_nodes_list.Unlist(node);std::cout<<"here"<<std::endl;
+        delete node;std::cout<<"here"<<std::endl;
     }
 
 }
@@ -41,9 +47,10 @@ Graph_Edge* Dynamic_Graph::Insert_Edge(Graph_Node* from, Graph_Node* to)
     graph_edges_list.Insert(new_Graph_Edge);
 
     from->Set_out_Degree(ADD);
-    from->add_adj(new_Graph_Edge);
+    from->add_adj(new_Graph_Edge,FROM);
     //std::cout<<"**test " <<from->get_first_adj()->get_from()->Get_key();
     to->Set_in_Degree(ADD);
+    to->add_adj(new_Graph_Edge,TO);
     //std::cout<<"nodes from: "<< from->Get_key()<< " to: "<< to->Get_key()<<std::endl;
     //std::cout<<"edge from: "<< new_Graph_Edge->get_from()->Get_key()<< " to: "<<
     //new_Graph_Edge->get_to()->Get_key()<<std::endl;
@@ -52,7 +59,8 @@ Graph_Edge* Dynamic_Graph::Insert_Edge(Graph_Node* from, Graph_Node* to)
 void Dynamic_Graph::Delete_Edge(Graph_Edge* edge)
 {
     graph_edges_list.Unlist(edge);
-    edge->get_from()->remove_adj(edge);
+    edge->get_from()->remove_adj(edge,FROM);
+    edge->get_from()->remove_adj(edge,TO);
     edge->get_from()->Set_out_Degree(SUBTRACT);
     edge->get_to()->Set_in_Degree(SUBTRACT);
     delete edge;
