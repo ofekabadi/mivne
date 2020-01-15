@@ -42,7 +42,11 @@ Graph_Edge* Dynamic_Graph::Insert_Edge(Graph_Node* from, Graph_Node* to)
 
     from->Set_out_Degree(ADD);
     from->add_adj(new_Graph_Edge);
+    //std::cout<<"**test " <<from->get_first_adj()->get_from()->Get_key();
     to->Set_in_Degree(ADD);
+    //std::cout<<"nodes from: "<< from->Get_key()<< " to: "<< to->Get_key()<<std::endl;
+    //std::cout<<"edge from: "<< new_Graph_Edge->get_from()->Get_key()<< " to: "<<
+    //new_Graph_Edge->get_to()->Get_key()<<std::endl;
 }
 
 void Dynamic_Graph::Delete_Edge(Graph_Edge* edge)
@@ -120,12 +124,15 @@ Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
         {
             if(adj->get_from()->getRelatedTreeNode() != NULL)
             {
-                continue;               //the node has already been discovered
+                adj = adj->get_prev_adj();
+                std::cout<<"**in if"<<std::endl;
+                continue;              //the node has already been discovered
             }
             Tree_Node* child_node = new Tree_Node(adj->get_from()->Get_key());
             adj->get_from()->setRelatedTreeNode(child_node);
             tree->addToNodesList(child_node);
             child_node->setFather(current_tree_node);
+            std::cout<<"**in bfs"<<std::endl;
             if (current_node == current_node->get_first_adj()->get_from())
             {
                 current_tree_node->setLeftChild(child_node);
@@ -136,7 +143,9 @@ Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
                         (child_node);
             }
             Q.Push(adj->get_from());
-            adj = adj->get_next_adj();
+            adj = adj->get_prev_adj();
+
+            std::cout<<"**curr adj"<<adj->get_from()->Get_key()<<std::endl;
         }
         Q.Pop();
     }

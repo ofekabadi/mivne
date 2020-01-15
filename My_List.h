@@ -13,6 +13,7 @@ public:
     void Adj_insert(T x);
     void Adj_unlist(T x);
     T Get_head();
+    T Get_tail();
 
 private:
     T _head;
@@ -36,6 +37,7 @@ void My_List<T>::Insert(T x)
     else
     {
         _tail->_next = x;
+        x->_prev = _tail;
         _tail = x;
     }
 }
@@ -49,10 +51,25 @@ void My_List<T>::Unlist(T x)
         return;
     }
 
-    x->_next->_prev = x->_prev;
-    x->_prev->_next = x->_next;
-
-
+    if(x == _head && x == _tail)
+    {
+        _head = NULL;
+        _tail = NULL;
+    }
+    else if(x == _head)
+    {
+        x->_next->_prev = NULL;
+        _head = x->_next;
+    }
+    else if(x == _tail)
+    {
+        x->_prev->_next = NULL;
+        _tail = x->_prev;
+    }
+    else{
+        x->_prev->_next = x->_next;
+        x->_next->_prev = x->_prev;
+    }
 }  //does not delete!!!
 
 
@@ -80,14 +97,37 @@ void My_List<T>::Adj_insert(T x)
 template <class T>
 void My_List<T>::Adj_unlist(T x)   //does not delete!!!
 {
+
     if (x == NULL)
     {
         return;
     }
 
-    x->_next_adj->_prev_adj = x->_prev_adj;
-    x->_prev_adj->_next_adj = x->_next_adj;
-    delete x;
+    if(x == _head && x == _tail)
+    {
+        _head = NULL;
+        _tail = NULL;
+    }
+    else if(x == _head)
+    {
+        x->_next_adj->_prev_adj = NULL;
+        _head = x->_next_adj;
+    }
+    else if(x == _tail)
+    {
+        x->_prev_adj->_next_adj = NULL;
+        _tail = x->_prev_adj;
+    }
+    else{
+        x->_prev_adj->_next_adj = x->_next;
+        x->_next_adj->_prev_adj = x->_prev;
+    }
+
+
+    if (x == NULL)
+    {
+        return;
+    }
 }
 
 
@@ -95,6 +135,13 @@ template <class T>
 T  My_List<T>::Get_head()
 {
     return _head;
+}
+
+
+template <class T>
+T  My_List<T>::Get_tail()
+{
+    return _tail;
 }
 
 

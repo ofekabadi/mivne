@@ -24,7 +24,7 @@ public:
     void Set_out_Degree(Node_operations operation);
     void Set_in_Degree(Node_operations operation);
 
-    inline Graph_Edge *get_first_adj() { _adj.Get_head(); }
+    inline Graph_Edge *get_first_adj() { _adj.Get_tail(); }
     inline void add_adj(Graph_Edge *adj_edge) { _adj.Adj_insert(adj_edge); }
     inline void remove_adj(Graph_Edge *adj_edge) { _adj.Adj_unlist(adj_edge); }
 
@@ -48,13 +48,14 @@ public:
     class My_List;
 
 
+    Graph_Node *_next;
+    Graph_Node *_prev;
+
 private:
     unsigned const _key;
     unsigned _out_Degree;
-    unsigned _in_Degree;
 
-    Graph_Node *_next;
-    Graph_Node *_prev;
+    unsigned _in_Degree;
 
     Adj_List _adj;
 

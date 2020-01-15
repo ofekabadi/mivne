@@ -117,6 +117,8 @@ int main()
     cout<<"The in degree of node "<< nodes_array[6]->Get_key()<< " is " << nodes_array[6]->Get_in_Degree()<<"\n";
     delete G;
 
+    std::cout<<"**after delete graph"<<std::endl;
+
     for (unsigned i =0;i<INITIAL_NODES_NUM;i++)
     {
         nodes_array[i] = NULL;
@@ -132,6 +134,8 @@ int main()
         nodes_array_counter = nodes_array_counter + 1;
         node_key = node_key + 1;
     }
+
+    std::cout<<"**nodes_array_counter: "<<nodes_array_counter<<std::endl;
 
     unsigned node_index_1;
     unsigned node_index_2;
@@ -155,7 +159,7 @@ int main()
     for (unsigned i = 0;i < TEST_SIZE;i++)
     {
         operation = generate_random_unsigned(NUM_OF_OPERATIONS)+1;
-        switch (operation)
+        switch (6)
         {
             case INSERT_NODE:
                 nodes_array[nodes_array_counter] = G->Insert_Node(node_key);
