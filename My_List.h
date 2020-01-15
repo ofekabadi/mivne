@@ -117,6 +117,7 @@ void My_List<T>::Adj_unlist(T x)   //does not delete!!!
     {
         x->_prev_adj->_next_adj = NULL;
         _tail = x->_prev_adj;
+        std::cout<<" ";
     }
     else{
         x->_prev_adj->_next_adj = x->_next;
