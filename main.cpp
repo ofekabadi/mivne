@@ -115,9 +115,7 @@ int main()
     }
     cout<<"The out degree of node "<< nodes_array[2]->Get_key()<< " is " << nodes_array[2]->Get_out_Degree()<<"\n";
     cout<<"The in degree of node "<< nodes_array[6]->Get_key()<< " is " << nodes_array[6]->Get_in_Degree()<<"\n";
-
     delete G;
-    std::cout<<"After delete G"<<std::endl;
 
     for (unsigned i =0;i<INITIAL_NODES_NUM;i++)
     {
@@ -126,7 +124,7 @@ int main()
     node_key = 1;
     nodes_array_counter = 0;
     G = new Dynamic_Graph();
- std::cout<<"here 1"<<std::endl;
+
     for (unsigned i =0;i<INITIAL_NODES_NUM;i++)
     {
         nodes_array[nodes_array_counter] = G->Insert_Node(node_key);
@@ -134,10 +132,10 @@ int main()
         nodes_array_counter = nodes_array_counter + 1;
         node_key = node_key + 1;
     }
-    std::cout<<"After initial nodes num"<<std::endl;
+
     unsigned node_index_1;
     unsigned node_index_2;
-std::cout<<"here 2"<<std::endl;
+
     while(edges_array_counter < INITIAL_EDGES_NUM)
     {
         node_index_1 = generate_random_unsigned(nodes_array_counter);
@@ -151,6 +149,7 @@ std::cout<<"here 2"<<std::endl;
     }
 
     unsigned edge_index;
+
     Rooted_Tree* T = NULL;
 
     for (unsigned i = 0;i < TEST_SIZE;i++)

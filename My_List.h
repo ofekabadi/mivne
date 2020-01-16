@@ -3,19 +3,24 @@
 
 #include <cstddef>
 
+#include <iostream> //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 template <class T>
 class My_List
 {
 public:
     My_List (T head = NULL): _head(head), _tail(head){}
+
     void Insert(T x);
     void Unlist(T x);
-    void Adj_to_insert(T x);
+
     void Adj_from_insert(T x);
-    void Adj_to_unlist(T x);
+    void Adj_to_insert(T x);
     void Adj_from_unlist(T x);
-    T Get_head();
-    T Get_tail();
+    void Adj_to_unlist(T x);
+
+    T Get_head() const;
+    T Get_tail() const;
 
 private:
     T _head;
@@ -53,6 +58,7 @@ void My_List<T>::Unlist(T x)
         return;
     }
 
+
     if(x == _head && x == _tail)
     {
         _head = NULL;
@@ -60,8 +66,8 @@ void My_List<T>::Unlist(T x)
     }
     else if(x == _head)
     {
-        x->_next->_prev = NULL;
         _head = x->_next;
+        x->_next->_prev = NULL;
     }
     else if(x == _tail)
     {
@@ -72,6 +78,9 @@ void My_List<T>::Unlist(T x)
         x->_prev->_next = x->_next;
         x->_next->_prev = x->_prev;
     }
+
+    x->_next = NULL;
+    x->_prev = NULL;
 }  //does not delete!!!
 
 
@@ -91,6 +100,7 @@ void My_List<T>::Adj_from_insert(T x)
     else
     {
         _tail->_next_adj_from = x;
+        x->_prev_adj_from = _tail;
         _tail = x;
     }
 }
@@ -111,6 +121,7 @@ void My_List<T>::Adj_to_insert(T x)
     else
     {
         _tail->_next_adj_to = x;
+        x->_prev_adj_to = _tail;
         _tail = x;
     }
 }
@@ -141,9 +152,12 @@ void My_List<T>::Adj_from_unlist(T x)   //does not delete!!!
 
     }
     else{
-        x->_prev_adj_from->_next_adj_from = x->_next_adj_from;
         x->_next_adj_from->_prev_adj_from = x->_prev_adj_from;
+        x->_prev_adj_from->_next_adj_from = x->_next_adj_from;
     }
+
+    x->_next_adj_from = NULL;
+    x->_prev_adj_from = NULL;
 }
 
 template <class T>
@@ -172,19 +186,23 @@ void My_List<T>::Adj_to_unlist(T x)   //does not delete!!!
 
     }
     else{
-        x->_prev_adj_to->_next_adj_to = x->_next_adj_to;
         x->_next_adj_to->_prev_adj_to = x->_prev_adj_to;
+        x->_prev_adj_to->_next_adj_to = x->_next_adj_to;
     }
+
+    x->_next_adj_to = NULL;
+    x->_prev_adj_to = NULL;
 }
+
 template <class T>
-T  My_List<T>::Get_head()
+T  My_List<T>::Get_head() const
 {
     return _head;
 }
 
 
 template <class T>
-T  My_List<T>::Get_tail()
+T  My_List<T>::Get_tail() const
 {
     return _tail;
 }

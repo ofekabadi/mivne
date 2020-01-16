@@ -39,8 +39,8 @@ void Rooted_Tree::Print_By_Layer(std::ostream& stream) const
             stream << DELIMITER << current_print->_key;
             Q.Push(current_print->_left_child);
             current_print = current_print->_right_sibling;
-            stream << std::endl;
         }
+        stream << std::endl;
         current_print = Q.Get_front();
     }
 }

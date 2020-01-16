@@ -1,7 +1,7 @@
 #include "Graph_Node.h"
 #include "Graph_Edge.h"
 
-void Graph_Node::add_adj(Graph_Edge *adj_edge,Edge_Sides side)
+void Graph_Node::add_adj(Graph_Edge *adj_edge, Edge_Sides side)
 {
     if(side == FROM)
     {
@@ -16,7 +16,7 @@ void Graph_Node::add_adj(Graph_Edge *adj_edge,Edge_Sides side)
 
 }
 
-void Graph_Node:: remove_adj(Graph_Edge *adj_edge,Edge_Sides side)
+void Graph_Node:: remove_adj(Graph_Edge *adj_edge, Edge_Sides side)
 {
 
     if(side == FROM)

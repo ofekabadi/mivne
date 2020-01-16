@@ -6,18 +6,22 @@
 #include "My_List.h"
 #include "Tree_Node.h"
 
+using namespace std;
+
+
 class Graph_Edge; //forward declaration
 
 typedef enum {SUBTRACT=0, ADD} Node_operations;
-typedef My_List<Graph_Edge*> Adj_List;
 typedef enum {FROM=0,TO } Edge_Sides;
+typedef My_List<Graph_Edge*> Adj_List;
 
 
 class Graph_Node {
 public:
-    Graph_Node(unsigned newKey) : _key(newKey), _out_Degree(0), _in_Degree(0),
-                                  _next(NULL), _prev(NULL), _adj_from(NULL),_adj_to(NULL),
-                                  _related_Tree_Node(NULL), _DFS_visited(false) {}
+    Graph_Node(unsigned newKey): _key(newKey), _out_Degree(0), _in_Degree(0),
+                                  _next(NULL), _prev(NULL), _qNext(NULL), _qPrev(NULL),
+                                  _adj_from(NULL), _adj_to(NULL), _related_Tree_Node
+                                  (NULL) , _DFS_visited(false){}
 
     inline unsigned Get_key() const {return _key;}
 
@@ -48,21 +52,28 @@ public:
 
     template<typename T> friend
     class My_List;
+    template<typename T> friend
+    class My_Queue;
 
+private:
+
+    unsigned const _key;
+    unsigned _out_Degree;
+    unsigned _in_Degree;
 
     Graph_Node *_next;
     Graph_Node *_prev;
 
-private:
-    unsigned const _key;
-    unsigned _out_Degree;
+    Graph_Node *_qNext;
+    Graph_Node *_qPrev;
 
-    unsigned _in_Degree;
+
 
     Adj_List _adj_from;
     Adj_List _adj_to;
 
     Tree_Node *_related_Tree_Node;
+
     bool _DFS_visited;
 };
 
