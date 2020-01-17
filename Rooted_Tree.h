@@ -20,7 +20,8 @@ public:
     ~Rooted_Tree();
     void Print_By_Layer(std::ostream& stream) const;
     void Preorder_Print(std::ostream& stream) const;
-    void Preorder(Tree_Node* _child,std::ostream& stream)const;
+    void Preorder(Tree_Node* _current,std::ostream& stream)
+    const;
 
     void setSource(Tree_Node *source) {_source = source;}
     void addToNodesList(Tree_Node* node) {_nodes_List.Insert(node);}

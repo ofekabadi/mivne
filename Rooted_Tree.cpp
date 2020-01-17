@@ -56,16 +56,17 @@ void Rooted_Tree::Preorder_Print(std::ostream& stream) const
     }
     stream << _source->_key;
     Preorder(_source->_left_child,stream);
+    stream << std::endl;
 }
 
-void Rooted_Tree:: Preorder(Tree_Node* _child,std::ostream& stream)const
+void Rooted_Tree:: Preorder(Tree_Node* _current,std::ostream& stream) const
 {
-    if (_child == NULL)
+    if (_current == NULL)
     {
         return;
     }
-    stream<<DELIMITER<<_child->_key;
-    Preorder(_child->_left_child,stream);
-    Preorder(_child->_left_child->_right_sibling,stream);
+    stream<<DELIMITER<<_current->_key;
+    Preorder(_current->_left_child,stream);
+    Preorder(_current->_right_sibling,stream);
 
 }
