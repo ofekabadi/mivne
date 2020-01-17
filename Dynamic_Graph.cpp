@@ -77,25 +77,25 @@ Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
     Graph_Node_Queue Q(source);
     while (Q.Get_front() != NULL)
     {
-       // cout<<"Q size: "<<Q.Get_size()<<endl;
+        //cout<<"Q size: "<<Q.Get_size()<<endl;
         Graph_Node* current_node = Q.Get_front();   //this is a GRAPH node
         Tree_Node* current_tree_node = current_node->getRelatedTreeNode();
         //cout<<"**current graph node: "<<current_node->Get_key()<<endl;
-       // cout<<"**current tree node: "<<current_tree_node->get_tree_key()<<endl;
+        cout<<"**current tree node: "<<current_tree_node->get_tree_key()<<endl;
         if (current_node == source)
         {
             source_node->setFather(NULL);
             tree->setSource(source_node);
         }
 
-        //cout<<"adj list: ";
         Graph_Edge* adjPrint = current_node->get_first_adj();
+       /* cout<<"adj list of "<<adjPrint->get_from()->Get_key()<<": "<<endl;
         while (adjPrint != NULL)
         {
             cout<<adjPrint->get_to()->Get_key()<<", ";
             adjPrint = adjPrint->get_prev_adj();
         }
-        cout<<endl;
+        cout<<endl;*/
 
         Graph_Edge* adj = current_node->get_first_adj();
         Tree_Node* left_sibling = NULL;
@@ -104,7 +104,7 @@ Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
 
             if(adj->get_to()->getRelatedTreeNode() != NULL)
             {
-              //  cout<<"**if"<<endl<<endl;
+              //cout<<"**if"<<endl<<endl;
                 adj = adj->get_prev_adj();
                 continue;              //the node has already been discovered
             }
@@ -112,12 +112,13 @@ Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
             adj->get_to()->setRelatedTreeNode(child_node);
             tree->addToNodesList(child_node);
 
-           // cout<<"**current adj: "<<adj->get_to()->Get_key()<<endl;
+           //cout<<"**current adj: "<<adj->get_to()->Get_key()<<endl;
             //cout<<"**current graph node child: "<<child_node->get_tree_key()<<endl;
 
 
             child_node->setFather(current_tree_node);
-            if (adj == current_node->get_first_adj())
+            if (adj == current_node->get_first_adj() || current_tree_node->getLeftChild
+            () == NULL)
             {
                 current_tree_node->setLeftChild(child_node);
             }
