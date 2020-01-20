@@ -18,33 +18,62 @@ void Rooted_Tree::Print_By_Layer(std::ostream& stream) const
     {
         return;
     }
-    stream << _source->_key << std::endl;
 
-    if (_source->_left_child == NULL)
+    Tree_Node* current_print = _source;
+    Tree_Node_Queue Q1(current_print), Q2(NULL);
+
+    Tree_Node_Queue *currentQ = &Q1;
+    Tree_Node_Queue *nextQ = &Q2;
+
+    while(currentQ->Get_front() != NULL)
     {
-        return;
-    }
+        current_print = currentQ->Pop();
+        stream << current_print->get_tree_key();
+        nextQ->Push(current_print->_left_child);
 
-    Tree_Node* current_print =_source->_left_child;
-    Tree_Node_Queue Q(current_print);
-
-    while (current_print != NULL)
-    {
-        stream << current_print->_key;
-        Q.Push(current_print->_left_child);
         current_print = current_print->_right_sibling;
-        Q.Pop();
         while(current_print != NULL)
         {
             stream << DELIMITER << current_print->_key;
-            Q.Push(current_print->_left_child);
+            nextQ->Push(current_print->_left_child);
             current_print = current_print->_right_sibling;
+            if(current_print == NULL)
+            {
+                current_print = currentQ->Pop();
+            }
         }
+
         stream << std::endl;
-        current_print = Q.Get_front();
+        if(currentQ == &Q1)
+        {
+            currentQ = &Q2;
+            nextQ = &Q1;
+            continue;
+        }
+        else if(currentQ == &Q2)
+        {
+            currentQ = &Q1;
+            nextQ = &Q2;
+        }
     }
 }
 
+
+void Rooted_Tree::QSwitcher(Tree_Node_Queue* currentQ, Tree_Node_Queue* nextQ,
+        Tree_Node_Queue Q1, Tree_Node_Queue Q2) const
+{
+    if(currentQ == &Q1)
+    {
+        currentQ = &Q2;
+        nextQ = &Q1;
+        return;
+    }
+    else if(currentQ == &Q2)
+    {
+        currentQ = &Q1;
+        nextQ = &Q2;
+    }
+}
 
 
 

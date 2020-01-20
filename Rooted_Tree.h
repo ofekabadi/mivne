@@ -18,7 +18,12 @@ class Rooted_Tree
 public:
     Rooted_Tree(): _source(NULL), _nodes_List(NULL){}
     ~Rooted_Tree();
+
     void Print_By_Layer(std::ostream& stream) const;
+    void QSwitcher(Tree_Node_Queue* currentQ, Tree_Node_Queue* nextQ, Tree_Node_Queue Q1,
+                                Tree_Node_Queue Q2) const;
+
+
     void Preorder_Print(std::ostream& stream) const;
     void Preorder(Tree_Node* _current,std::ostream& stream)
     const;
@@ -28,7 +33,7 @@ public:
 
 
 
-    void printTree () const
+    /*void printTree () const
     {
         Tree_Node* printNode = _nodes_List.Get_head();
         while(printNode != NULL)
@@ -49,7 +54,7 @@ public:
             std::cout<<std::endl;
             printNode = printNode->_next;
         }
-    }
+    }*/
 
 
 private:

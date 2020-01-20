@@ -20,7 +20,6 @@ private:
     T _front;
     T _end;
     unsigned _qSize;
-
 };
 
 
@@ -32,7 +31,7 @@ void My_Queue<T>::Push(T x)
         return;
     }
 
-    if(_front == NULL && _end == NULL)
+    if(_front == NULL)
     {
         _front = x;
         _end = x;
@@ -49,16 +48,24 @@ void My_Queue<T>::Push(T x)
 template <class T>
 T My_Queue<T>::Pop()
 {
-    if(_front == _end)
+    if(_end == NULL)
+    {
+        return NULL;
+    }
+
+    T poped = _front;
+
+   if(_front == _end)
     {
         _front->_qNext = NULL;
         _front->_qPrev = NULL;
         _front = NULL;
         _end = NULL;
-        return NULL;
+
+        return poped;
     }
 
-    T poped = _front;
+
     _front = _front->_qNext;
     poped->_qNext = NULL;
     _front->_qPrev = NULL;
@@ -81,11 +88,12 @@ unsigned My_Queue<T>::Get_size()
 template <class T>
 unsigned My_Queue<T>::printQ()
 {
+   // std::cout<<std::endl<<"Q print: "<<std::endl;
     T print = _front;
     while(print != NULL)
     {
         std::cout<<print->get_tree_key()<<", ";
-        print = _front->_qNext;
+        print = print->_qNext;
     }
     std::cout<<std::endl;
 }

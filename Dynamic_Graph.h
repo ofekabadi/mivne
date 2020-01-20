@@ -27,7 +27,7 @@ public:
     Rooted_Tree* BFS(Graph_Node* source) const;
 
 
-   void printGraph() const
+   /*void printGraph() const
     {
         cout<<"nodes:"<<endl;
         Graph_Node* nodePrint = graph_nodes_list.Get_tail(); //from newest to oldest
@@ -47,7 +47,7 @@ public:
         }
 
         cout<<endl<<"end of graph"<<endl<<endl;
-    }
+    }*/
 
 
 private:

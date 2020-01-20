@@ -89,13 +89,13 @@ Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
         }
 
         Graph_Edge* adjPrint = current_node->get_first_adj();
-       /* cout<<"adj list of "<<adjPrint->get_from()->Get_key()<<": "<<endl;
+       cout<<"adj list of "<<adjPrint->get_from()->Get_key()<<": "<<endl;
         while (adjPrint != NULL)
         {
             cout<<adjPrint->get_to()->Get_key()<<", ";
             adjPrint = adjPrint->get_prev_adj();
         }
-        cout<<endl;*/
+        cout<<endl;
 
         Graph_Edge* adj = current_node->get_first_adj();
         Tree_Node* left_sibling = NULL;
