@@ -59,24 +59,6 @@ void Rooted_Tree::Print_By_Layer(std::ostream& stream) const
 }
 
 
-void Rooted_Tree::QSwitcher(Tree_Node_Queue* currentQ, Tree_Node_Queue* nextQ,
-        Tree_Node_Queue Q1, Tree_Node_Queue Q2) const
-{
-    if(currentQ == &Q1)
-    {
-        currentQ = &Q2;
-        nextQ = &Q1;
-        return;
-    }
-    else if(currentQ == &Q2)
-    {
-        currentQ = &Q1;
-        nextQ = &Q2;
-    }
-}
-
-
-
 void Rooted_Tree::Preorder_Print(std::ostream& stream) const
 {
     if (_source == NULL)

@@ -20,9 +20,6 @@ public:
     ~Rooted_Tree();
 
     void Print_By_Layer(std::ostream& stream) const;
-    void QSwitcher(Tree_Node_Queue* currentQ, Tree_Node_Queue* nextQ, Tree_Node_Queue Q1,
-                                Tree_Node_Queue Q2) const;
-
 
     void Preorder_Print(std::ostream& stream) const;
     void Preorder(Tree_Node* _current,std::ostream& stream)

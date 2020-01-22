@@ -152,10 +152,10 @@ int main()
 
     Rooted_Tree* T = NULL;
 
-    for (unsigned i = 0;i < TEST_SIZE;i++)
+    for (unsigned i = 0;i < 1;i++)
     {
         operation = generate_random_unsigned(NUM_OF_OPERATIONS)+1;
-        switch (operation)
+        switch (5)
         {
             case INSERT_NODE:
                 nodes_array[nodes_array_counter] = G->Insert_Node(node_key);

@@ -59,7 +59,7 @@ void Dynamic_Graph::Delete_Edge(Graph_Edge* edge)
 {
     graph_edges_list.Unlist(edge);
     edge->get_from()->remove_adj(edge,FROM);
-    edge->get_from()->remove_adj(edge,TO);
+    edge->get_to()->remove_adj(edge,TO);
     edge->get_from()->Set_out_Degree(SUBTRACT);
     edge->get_to()->Set_in_Degree(SUBTRACT);
     delete edge;
@@ -149,21 +149,44 @@ Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
 
 Rooted_Tree* Dynamic_Graph::SCC()
 {
+    Rooted_Tree* SCC_tree = new Rooted_Tree;
+    Tree_Node* root_node = new Tree_Node(0);
+
+    SCC_tree->setSource(root_node);
+    //DFS();
+    return DFS();
+
 
 }
 
 Rooted_Tree*  Dynamic_Graph::DFS()
 {
-    visitedInitialiser();
+    //visitedInitialiser();
     Rooted_Tree* tree = new Rooted_Tree;
     Tree_Node* root_node = new Tree_Node(graph_nodes_list.Get_head()->Get_key());
     tree->addToNodesList(root_node);
     tree->setSource(root_node);
+    Graph_Node * node_dfs = graph_nodes_list.Get_head();
+    while (node_dfs != NULL)
+        {
+            node_dfs->node_color = white;
+            root_node->setFather(NULL);
+            node_dfs = node_dfs->Get_next();
 
-    DFS_Visit(root_node, graph_nodes_list.Get_head());
-
+        }
+    time = 0;
+    node_dfs = graph_nodes_list.Get_head();
+    while (node_dfs != NULL)
+        {
+            if(node_dfs->node_color == white)
+            {
+                DFS_Visit(tree,root_node, graph_nodes_list.Get_head());
+            }
+            node_dfs = node_dfs->Get_next();
+        }
+    return tree;
 }
-
+/*
 void Dynamic_Graph::visitedInitialiser()
 {
     Graph_Node* front_node = graph_nodes_list.Get_head();
@@ -173,17 +196,116 @@ void Dynamic_Graph::visitedInitialiser()
         front_node = front_node->Get_next();
     }
 }
-
-Rooted_Tree*  Dynamic_Graph::DFS_Visit(Tree_Node* treeFatherNode, Graph_Node*
+*/
+void Dynamic_Graph::DFS_Visit(Rooted_Tree* tree,Tree_Node* treeFatherNode, Graph_Node*
 graphFatherNode)
-{
+{/*
     Graph_Edge* adj = graphFatherNode->get_first_adj();
     while (adj != NULL)
     {
         Tree_Node* treeNode = new Tree_Node(adj->get_from()->Get_key());
         treeNode->setFather(treeFatherNode);
         DFS_Visit(treeNode, adj->get_from());
+    }*/
+Graph_Edge* adj = graphFatherNode->get_first_adj();
+Tree_Node* treeNode = new Tree_Node(adj->get_to()->Get_key());
+time++;
+graphFatherNode->node_discovery = time;
+graphFatherNode->node_color = grey;
+    while (adj != NULL)
+    {
+
+        if(adj->get_to()->node_color == white)
+        {
+           treeNode->setFather(treeFatherNode);
+           DFS_Visit(tree,treeNode,adj->get_to());
+           tree->addToNodesList(treeNode);
+           std::cout<<"tin loop"<<std::endl;
+           return;
+        }
+
+        adj = adj->get_next();
     }
+    graphFatherNode->node_color = black;
+    time++;
+    graphFatherNode->node_f = time;
+    retraction_time_list.Insert(graphFatherNode);
+
+
+
 }
 
+/*
+Rooted_Tree*  Dynamic_Graph::Reverse_DFS()
+{
+    //visitedInitialiser();
+    Rooted_Tree* tree = new Rooted_Tree;
+    Tree_Node* root_node = new Tree_Node(graph_nodes_list.Get_head()->Get_key());
+    tree->addToNodesList(root_node);
+    tree->setSource(root_node);
+    Graph_Node * node_dfs = retraction_time_list.Get_tail();
+    while (node_dfs != NULL)
+    {
+        node_dfs->node_color = white;
+        root_node->setFather(NULL);
 
+        node_dfs = node_dfs->Get_prev();
+    }
+    time = 0;
+    node_dfs = retraction_time_list.Get_tail();
+    while (node_dfs != NULL)
+    {
+        if(node_dfs->node_color == white)
+        {
+            tree->addToNodesList( DFS_Visit(root_node, node_dfs));
+        }
+        node_dfs = node_dfs->Get_prev();
+    }
+    return tree;
+}*/
+/*
+void Dynamic_Graph::visitedInitialiser()
+{
+    Graph_Node* front_node = graph_nodes_list.Get_head();
+    while (front_node != NULL)
+    {
+        front_node->setDfsVisited(false);
+        front_node = front_node->Get_next();
+    }
+}
+*/
+/*
+Tree_Node* Dynamic_Graph::Reverse_DFS_Visit(Tree_Node* treeFatherNode, Graph_Node*
+graphFatherNode)
+{*//*
+    Graph_Edge* adj = graphFatherNode->get_first_adj();
+    while (adj != NULL)
+    {
+        Tree_Node* treeNode = new Tree_Node(adj->get_from()->Get_key());
+        treeNode->setFather(treeFatherNode);
+        DFS_Visit(treeNode, adj->get_from());
+    }*//*
+    Graph_Edge* adj = graphFatherNode->get_first_adj();
+    Tree_Node* treeNode = new Tree_Node(adj->get_to()->Get_key());
+    time++;
+    graphFatherNode->node_discovery = time;
+    graphFatherNode->node_color = grey;
+    while (adj != NULL)
+    {
+
+        if(adj->get_from()->node_color == white)
+        {
+            treeNode->setFather(treeFatherNode);
+            DFS_Visit(treeNode,adj->get_to());
+            return treeNode;
+        }
+        adj = adj->get_next();
+    }
+    graphFatherNode->node_color = black;
+    time++;
+    graphFatherNode->node_f = time;
+
+
+
+}
+*/

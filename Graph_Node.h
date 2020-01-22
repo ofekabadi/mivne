@@ -21,7 +21,8 @@ public:
     Graph_Node(unsigned newKey): _key(newKey), _out_Degree(0), _in_Degree(0),
                                   _next(NULL), _prev(NULL), _qNext(NULL), _qPrev(NULL),
                                   _adj_from(NULL), _adj_to(NULL), _related_Tree_Node
-                                  (NULL) , _DFS_visited(false){}
+                                  (NULL) , _DFS_visited(false),node_discovery(0),
+                                 node_color(0),node_f(0){}
 
     inline unsigned Get_key() const {return _key;}
 
@@ -54,6 +55,9 @@ public:
     class My_List;
     template<typename T> friend
     class My_Queue;
+    unsigned node_discovery;
+    unsigned node_f;
+    unsigned node_color;
 
 private:
 
@@ -73,6 +77,7 @@ private:
     Adj_List _adj_to;
 
     Tree_Node *_related_Tree_Node;
+
 
     bool _DFS_visited;
 };
