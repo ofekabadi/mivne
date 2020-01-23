@@ -32,7 +32,7 @@ public:
     Tree_Node *DFS_Visit(Rooted_Tree *tree, Graph_Node *graphNode, Tree_Node *parent,
             DFS_Type) const;
 
-    void DFS_Initialize(Node_List nodes_oreder, DFS_Type dfsType) const;
+    void DFS_Initialize(Node_List nodes_order, DFS_Type dfsType) const;
 
     void printGraph() const;
 

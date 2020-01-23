@@ -56,10 +56,13 @@ Graph_Edge* Dynamic_Graph::Insert_Edge(Graph_Node* from, Graph_Node* to)
     //std::cout<<"nodes from: "<< from->Get_key()<< " to: "<< to->Get_key()<<std::endl;
     //std::cout<<"edge from: "<< new_Graph_Edge->get_from()->Get_key()<< " to: "<<
     //new_Graph_Edge->get_to()->Get_key()<<std::endl;
+    return new_Graph_Edge;
 }
 
 void Dynamic_Graph::Delete_Edge(Graph_Edge* edge)
 {
+    //cout<<"edge: "<<endl<<"from "<<edge->get_from()->Get_key()<<" to "<<edge->get_to()
+    //->Get_key()<<endl;
     graph_edges_list.Unlist(edge);
     edge->get_from()->remove_adj(edge,FROM);
     edge->get_to()->remove_adj(edge,TO);
@@ -70,7 +73,7 @@ void Dynamic_Graph::Delete_Edge(Graph_Edge* edge)
 
 Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
 {
-    DFS_Initialize(graph_nodes_list, REVERSED);
+    DFS_Initialize(graph_nodes_list, REGULAR);
     Rooted_Tree* tree = new Rooted_Tree;
     Tree_Node* source_node = new Tree_Node(source->Get_key());
     source->setRelatedTreeNode(source_node);
@@ -125,27 +128,36 @@ Rooted_Tree* Dynamic_Graph::BFS(Graph_Node* source) const
 
 Rooted_Tree* Dynamic_Graph::SCC() const
 {
-   Rooted_Tree* first_tree = DFS(graph_nodes_list, REGULAR);
-   cout<<"first:"<<endl;
 
-   first_tree->printTree();
-
-    Graph_Node* node = retraction_time_list.Get_tail();
+    /*  node = retraction_time_list.Get_tail();
     cout<<"ret time order:"<<endl;
     while(node!=NULL)
     {
         cout<<"key: "<<node->Get_key()<<", ";
         node = node->Get_retraction_prev();
     }
-    cout<<endl<<endl;
+    cout<<endl<<endl;*/
+
+    Rooted_Tree* first_tree = DFS(graph_nodes_list, REGULAR);
+   /*cout<<endl<<"first:"<<endl;
+   first_tree->printTree();*/
+
 
     Rooted_Tree* SCC_tree = DFS(retraction_time_list, REVERSED);
 
-
-    cout<<"second:"<<endl;
-    SCC_tree->printTree();
+    /*cout<<"second:"<<endl;
+    SCC_tree->printTree();*/
 
     delete first_tree;
+
+    Graph_Node* node = retraction_time_list.Get_head();
+    while(node!=NULL)
+    {
+       retraction_time_list.Unlist_retraction(node);
+       node = retraction_time_list.Get_head();
+    }
+
+
     return SCC_tree;
 }
 
@@ -158,20 +170,33 @@ Rooted_Tree*  Dynamic_Graph::DFS(Node_List nodes_order, DFS_Type dfsType) const
     tree->addToNodesList(source_node);
     Dynamic_Graph::time = 0;
     Graph_Node* currentNode = nodes_order.Get_tail();
+    Tree_Node* left_sibling = NULL;
     while(currentNode != NULL)
     {
-        cout<<"**"<<endl;
         if(currentNode->getRelatedTreeNode() == NULL)
         {
-            cout<<"**curr node key "<<currentNode->Get_key()<<endl;
-            DFS_Visit(tree, currentNode, source_node, dfsType);
+            Tree_Node* child =  DFS_Visit(tree, currentNode, source_node, dfsType);
+
+            if(currentNode == nodes_order.Get_tail() || source_node->getLeftChild
+                    () == NULL)
+            {
+                source_node->setLeftChild(child);
+            }
+            child->setParent(source_node);
+            if(left_sibling != NULL)
+            {
+                left_sibling->setRightSibling(child);
+            }
+            left_sibling = child;
         }
         switch (dfsType)
         {
             case REGULAR:
                 currentNode = currentNode->Get_prev();
+                break;
             case REVERSED:
                 currentNode = currentNode->Get_retraction_prev();
+                break;
         }
     }
     return tree;
@@ -188,8 +213,8 @@ parent, DFS_Type dfsType) const
     graphNode->setRelatedTreeNode(treeNode);
     tree->addToNodesList(treeNode);
 
-    cout<<"**DFS_Visit of node "<<treeNode->get_tree_key()<<", "<<graphNode->Get_key()
-    <<endl;
+    //cout<<"**DFS_Visit of node "<<treeNode->get_tree_key()<<", "<<graphNode->Get_key()
+    //<<endl;
 
     switch (dfsType)
     {
@@ -228,13 +253,13 @@ parent, DFS_Type dfsType) const
                 Tree_Node* left_sibling = NULL;
                 while(adj != NULL)
                 {
-                    cout<<"##"<<endl;
                     if(adj->get_from()->getRelatedTreeNode() == NULL)
                     {
                         Tree_Node* child = DFS_Visit(tree, adj->get_from(), treeNode,
                                                      REVERSED);
 
-                        if(adj == graphNode->get_first_adj_to())
+                        if(adj == graphNode->get_first_adj_to() || treeNode->getLeftChild
+                                () == NULL)
                         {
                             treeNode->setLeftChild(child);
                         }
@@ -257,6 +282,7 @@ parent, DFS_Type dfsType) const
     treeNode->setDfsRetraction(time);
     if(dfsType == REGULAR)
     {
+       // cout<<"** in ret: "<<treeNode->get_tree_key();
         retraction_time_list.Insert_retraction(graphNode);
     }
 
@@ -265,15 +291,15 @@ parent, DFS_Type dfsType) const
 
 
 
-void Dynamic_Graph::DFS_Initialize(Node_List nodes_oreder, DFS_Type dfsType) const
+void Dynamic_Graph::DFS_Initialize(Node_List nodes_order, DFS_Type dfsType) const
 {
-    Graph_Node* front_node = nodes_oreder.Get_head();
+    Graph_Node* front_node = nodes_order.Get_tail();
     if(dfsType == REGULAR)
     {
         while (front_node != NULL)
         {
             front_node->setRelatedTreeNode(NULL);
-            front_node = front_node->Get_next();
+            front_node = front_node->Get_prev();
         }
         return;
     }
@@ -282,7 +308,7 @@ void Dynamic_Graph::DFS_Initialize(Node_List nodes_oreder, DFS_Type dfsType) con
         while (front_node != NULL)
         {
             front_node->setRelatedTreeNode(NULL);
-            front_node = front_node->Get_retraction_next();
+            front_node = front_node->Get_retraction_prev();
         }
         return;
     }
@@ -314,6 +340,20 @@ void Dynamic_Graph::printGraph() const
         while (adjPrint != NULL) {
             cout << adjPrint->get_to()->Get_key() << ", ";
             adjPrint = adjPrint->get_prev_adj();
+        }
+        cout << endl;
+        currNode = currNode->Get_prev();
+    }
+
+    cout << endl << "reversed adj lists:" << endl;
+    currNode = graph_nodes_list.Get_tail();
+    while(currNode != NULL)
+    {
+        Graph_Edge *adjPrint =currNode->get_first_adj_to();
+        cout << "reversed adj list of " << currNode->Get_key() << ": ";
+        while (adjPrint != NULL) {
+            cout << adjPrint->get_from()->Get_key() << ", ";
+            adjPrint = adjPrint->get_prev_adj_to();
         }
         cout << endl;
         currNode = currNode->Get_prev();

@@ -2,11 +2,12 @@
 
 Rooted_Tree::~Rooted_Tree()
 {
-    Tree_Node* front_node = _nodes_List.Get_head();
-    while (front_node != NULL)
+    Tree_Node* front_node = _nodes_List.Get_tail();
+    while (front_node != NULL && front_node != _source)
     {
         _nodes_List.Unlist(front_node);
-        front_node = _nodes_List.Get_head();
+        delete front_node;
+        front_node = _nodes_List.Get_tail();
     }
     delete _source;
 }
@@ -27,11 +28,19 @@ void Rooted_Tree::Print_By_Layer(std::ostream& stream) const
 
     while(currentQ->Get_front() != NULL)
     {
+        if(currentQ->Get_front() != _source)
+        {
+            stream << std::endl;
+        }
         current_print = currentQ->Pop();
         stream << current_print->get_tree_key();
         nextQ->Push(current_print->_left_child);
 
         current_print = current_print->_right_sibling;
+        if (current_print == NULL)
+        {
+            current_print = currentQ->Pop();
+        }
         while(current_print != NULL)
         {
             stream << DELIMITER << current_print->_key;
@@ -43,7 +52,6 @@ void Rooted_Tree::Print_By_Layer(std::ostream& stream) const
             }
         }
 
-        stream << std::endl;
         if(currentQ == &Q1)
         {
             currentQ = &Q2;
@@ -67,7 +75,7 @@ void Rooted_Tree::Preorder_Print(std::ostream& stream) const
     }
     stream << _source->_key;
     Preorder(_source->_left_child,stream);
-    stream << std::endl;
+    //stream << std::endl;
 }
 
 void Rooted_Tree:: Preorder(Tree_Node* _current,std::ostream& stream) const

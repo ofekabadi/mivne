@@ -116,7 +116,6 @@ void My_List<T>::Unlist(T x)
         return;
     }
 
-
     if(x == _head && x == _tail)
     {
         _head = NULL;
@@ -124,8 +123,8 @@ void My_List<T>::Unlist(T x)
     }
     else if(x == _head)
     {
-        _head = x->_next;
         x->_next->_prev = NULL;
+        _head = x->_next;
     }
     else if(x == _tail)
     {
@@ -133,8 +132,8 @@ void My_List<T>::Unlist(T x)
         _tail = x->_prev;
     }
     else{
-        x->_prev->_next = x->_next;
         x->_next->_prev = x->_prev;
+        x->_prev->_next = x->_next;
     }
 
     x->_next = NULL;
@@ -241,7 +240,6 @@ void My_List<T>::Adj_to_unlist(T x)   //does not delete!!!
     {
         x->_prev_adj_to->_next_adj_to = NULL;
         _tail = x->_prev_adj_to;
-
     }
     else{
         x->_next_adj_to->_prev_adj_to = x->_prev_adj_to;

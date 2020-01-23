@@ -54,6 +54,6 @@ void Graph_Node::Set_in_Degree(Node_operations operation)
     }
 }
 
-
-
+unsigned Graph_Node::Get_out_Degree() const {return _out_Degree;}
+unsigned Graph_Node::Get_in_Degree() const {return _in_Degree;}
 

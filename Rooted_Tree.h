@@ -31,7 +31,6 @@ public:
 void printTree () const
 {
     Tree_Node* printNode = _nodes_List.Get_head();
-    std::cout<<"???"<<std::endl;
     while(printNode != NULL)
     {
         std::cout<<"node: "<<printNode->get_tree_key()<<std::endl;
@@ -47,7 +46,7 @@ void printTree () const
         {
             std::cout<<", right sibling: "<<printNode->_right_sibling->get_tree_key();
         }
-        std::cout<<std::endl;
+        std::cout<<std::endl<<std::endl;
         printNode = printNode->_next;
     }
 }
