@@ -89,3 +89,29 @@ void Rooted_Tree:: Preorder(Tree_Node* _current,std::ostream& stream) const
     Preorder(_current->_right_sibling,stream);
 
 }
+
+
+
+
+void Rooted_Tree::printTree() const
+{
+    Tree_Node* printNode = _nodes_List.Get_head();
+    while(printNode != NULL)
+    {
+        std::cout<<"node: "<<printNode->get_tree_key()<<std::endl;
+        if(printNode->_parent != NULL)
+        {
+            std::cout<<"parent: "<<printNode->_parent->get_tree_key();
+        }
+        if(printNode->_left_child != NULL)
+        {
+            std::cout<<", left child: "<<printNode->_left_child->get_tree_key();
+        }
+        if(printNode->_right_sibling != NULL)
+        {
+            std::cout<<", right sibling: "<<printNode->_right_sibling->get_tree_key();
+        }
+        std::cout<<std::endl<<std::endl;
+        printNode = printNode->_next;
+    }
+}
