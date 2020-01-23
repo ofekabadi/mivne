@@ -19,6 +19,9 @@ public:
     void Adj_from_unlist(T x);
     void Adj_to_unlist(T x);
 
+    void Insert_retraction(T x);
+    void Unlist_retraction(T x);
+
     T Get_head() const;
     T Get_tail() const;
 
@@ -27,6 +30,61 @@ private:
     T _tail;
 };
 
+
+template <class T>
+void My_List<T>::Insert_retraction(T x)
+{
+    if (x == NULL)
+    {
+        return;
+    }
+
+    if(_head == NULL && _tail==NULL)
+    {
+        _head = x;
+        _tail = x;
+    }
+    else
+    {
+        _tail->_retractionNext = x;
+        x->_retractionPrev = _tail;
+        _tail = x;
+    }
+}
+
+
+template <class T>
+void My_List<T>::Unlist_retraction(T x)
+{
+    if (x == NULL)
+    {
+        return;
+    }
+
+
+    if(x == _head && x == _tail)
+    {
+        _head = NULL;
+        _tail = NULL;
+    }
+    else if(x == _head)
+    {
+        _head = x->_retractionNext;
+        x->_retractionNext->_retractionPrev = NULL;
+    }
+    else if(x == _tail)
+    {
+        x->_retractionPrev->_retractionNext = NULL;
+        _tail = x->_retractionPrev;
+    }
+    else{
+        x->_retractionPrev->_retractionNext = x->_retractionNext;
+        x->_retractionNext->_retractionPrev = x->_retractionPrev;
+    }
+
+    x->_retractionNext = NULL;
+    x->_retractionPrev = NULL;
+}  //does not delete!!!
 
 template <class T>
 void My_List<T>::Insert(T x)

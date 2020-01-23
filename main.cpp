@@ -157,45 +157,12 @@ int main()
         operation = generate_random_unsigned(NUM_OF_OPERATIONS)+1;
         switch (5)
         {
-            case INSERT_NODE:
-                nodes_array[nodes_array_counter] = G->Insert_Node(node_key);
-                nodes_keys_array[nodes_array_counter] = node_key;
-                nodes_array_counter = nodes_array_counter + 1;
-                node_key = node_key + 1;
-                break;
-            case INSERT_EDGE:
-                node_index_1 = generate_random_unsigned(nodes_array_counter);
-                node_index_2 = generate_random_unsigned(nodes_array_counter);
-                if (node_index_1 != node_index_2 && edge_does_not_exists(my_edge_array,edges_array_counter,nodes_keys_array[node_index_1],nodes_keys_array[node_index_2]))
-                {
-                    edges_array[edges_array_counter] = G->Insert_Edge(nodes_array[node_index_1],nodes_array[node_index_2]);
-                    my_edge_array[edges_array_counter] = new My_Edge(nodes_keys_array[node_index_1],nodes_keys_array[node_index_2]);
-                    edges_array_counter = edges_array_counter + 1;
-                }
-                break;
-            case DELETE_NODE:
-                if (nodes_array_counter > 0)
-                {
-                    node_index_1 = generate_random_unsigned(nodes_array_counter);
-                    G->Delete_Node(nodes_array[node_index_1]);
-                    if (deleted_node(nodes_keys_array[node_index_1],my_edge_array,edges_array_counter))
-                    {
-                        shift_nodes_arrays(nodes_array,nodes_keys_array,node_index_1,nodes_array_counter);
-                        nodes_array_counter = nodes_array_counter - 1;
-                    }
-                }
-                break;
-            case DELETE_EDGE:
-                if (edges_array_counter > 0)
-                {
-                    edge_index = generate_random_unsigned(edges_array_counter);
-                    G->Delete_Edge(edges_array[edge_index]);
-                    shift_edges_arrays(edges_array,my_edge_array,edge_index,edges_array_counter);
-                    edges_array_counter = edges_array_counter - 1;
-                }
-                break;
             case STRONGLY_CONNECTED_COMPONENTS:
+                G->printGraph();
                 T = G->SCC();
+                //T->printTree();
+                break;
+
                 cout<<"Print in layers after SCC:"<<"\n";
                 T->Print_By_Layer(cout);
                 cout<<"\n";
@@ -204,33 +171,6 @@ int main()
                 cout<<"\n";
                 delete T;
                 T=NULL;
-                break;
-            case RUN_BFS:
-                if (nodes_array_counter > 0)
-                {
-                    node_index_1 = generate_random_unsigned(nodes_array_counter);
-                    T = G->BFS(nodes_array[node_index_1]);
-                    cout<<"Print in layers after BFS:"<<"\n";
-                    T->Print_By_Layer(cout);
-                    cout<<"\n";
-                    cout<<"Preorder print after BFS:"<<"\n";
-                    T->Preorder_Print(cout);
-                    cout<<"\n";
-                    delete T;
-                    T=NULL;
-                }
-                break;
-            case OUT_DEGREE:
-                if (nodes_array_counter > 0) {
-                    node_index_1 = generate_random_unsigned(nodes_array_counter);
-                    cout<<"The out degree of node "<< nodes_array[node_index_1]->Get_key()<< " is " << nodes_array[node_index_1]->Get_out_Degree()<<"\n";
-                }
-                break;
-            case IN_DEGREE:
-                if (nodes_array_counter > 0) {
-                    node_index_1 = generate_random_unsigned(nodes_array_counter);
-                    cout<<"The in degree of node "<< nodes_array[node_index_1]->Get_key()<< " is " << nodes_array[node_index_1]->Get_in_Degree()<<"\n";
-                }
                 break;
         }
     }

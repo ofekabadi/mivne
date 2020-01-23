@@ -20,6 +20,7 @@ public:
     inline Graph_Edge* get_prev (){return _prev;}
     inline Graph_Edge* get_prev_adj() const {return _prev_adj_from;}
     inline Graph_Edge* get_next_adj() const {return _next_adj_from;}
+    inline Graph_Edge* get_prev_adj_to() const {return _prev_adj_to;}
 
     template <typename T> friend class My_List;
 
@@ -28,9 +29,9 @@ private:
     Graph_Node* _to;
     Graph_Edge* _next;
     Graph_Edge* _prev;
-    Graph_Edge* _next_adj_from;
+    Graph_Edge* _next_adj_from;    //for regular graph direction
     Graph_Edge* _prev_adj_from;
-    Graph_Edge* _next_adj_to;
+    Graph_Edge* _next_adj_to;       //for reversed graph direction
     Graph_Edge* _prev_adj_to;
 };
 
